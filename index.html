@@ -12,6 +12,33 @@
       content="twitch, follow, followed, channel, followed channels, live, live channels, live twitch channels, live streams, live, livestream channel, eljose, eljose47, github"
     />
     <title>Followed Channel</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+      * {
+        box-sizing: border-box;
+        font-family: "Roboto", sans-serif;
+      }
+      html {
+        overflow: hidden;
+        background: #0b172b;
+        color: white;
+
+        @media (prefers-color-scheme: light) {
+          background: #0b172b59;
+          color: black;
+        }
+      }
+
+      body,
+      #root {
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        position: relative;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

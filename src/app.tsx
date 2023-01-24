@@ -2,33 +2,81 @@ import * as React from "react";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
+const Container = styled.div`
+  height: 100%;
+  width: 100%;
+  padding: 10px 6px;
+
+  overflow: hidden auto;
+
+  font-size: 16px;
+
+  @media (min-width: 460px) {
+    font-size: 26px;
+  }
+`;
+
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  row-gap: ${12 / 26}em;
+
+  * {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+`;
+
+const H1 = styled.div`
+  font-size: ${32 / 26}em;
+  font-weight: 700;
+
+  margin-bottom: 8px;
 `;
 
 const Entry = styled.a`
+  max-width: 100%;
+  flex-grow: 0;
   display: flex;
   gap: 8px;
   align-items: center;
-  height: 70px;
+  /* height: 70px; */
   text-decoration: none;
   color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
-const LiveSince = styled.div`
-  margin-left: auto;
+const Left = styled.img`
+  flex-shrink: 0;
+  object-fit: contain;
+  height: 50px;
+  width: 50px;
+
+  @media (min-width: 460px) {
+    height: unset;
+    width: unset;
+  }
+`;
+
+const Middle = styled.div`
+  flex-shrink: 1;
+  min-width: 0;
 `;
 
 const Channel = styled.div`
-  font-size: 28px;
+  font-size: ${28 / 26}em;
   font-weight: 600px;
 `;
 
 const Category = styled.div`
-  font-size: 26px;
+  font-size: 1em;
   font-weight: 300;
+`;
+
+const Right = styled.div`
+  margin-left: auto;
+  flex-shrink: 0;
 `;
 
 const clientId = "l3pj0aepy2pt31r2xv2bfyp2lebryx";
@@ -118,8 +166,8 @@ const App: React.FunctionComponent<AppProps> = (props) => {
   twitchAuthUrl.searchParams.append("scope", "user:read:follows");
 
   return (
-    <>
-      <h1>Followed Channels</h1>
+    <Container>
+      <H1>Followed Channels</H1>
       {access_token ? (
         <>
           {data?.followed && (
@@ -151,15 +199,15 @@ const App: React.FunctionComponent<AppProps> = (props) => {
                     href={`https://twitch.tv/${stream.user_login}`}
                     target="_blank"
                   >
-                    <img
+                    <Left
                       alt={`${stream.user_name} profile picture`}
                       src={profilePic}
                     />
-                    <div>
+                    <Middle>
                       <Channel>{stream.user_name}</Channel>
                       <Category>{stream.game_name}</Category>
-                    </div>
-                    <LiveSince>Live for: {hours_minutes}</LiveSince>
+                    </Middle>
+                    <Right>Live for: {hours_minutes}</Right>
                   </Entry>
                 );
               })}
@@ -169,7 +217,7 @@ const App: React.FunctionComponent<AppProps> = (props) => {
       ) : (
         <a href={twitchAuthUrl.toString()}>Connect with Twitch</a>
       )}
-    </>
+    </Container>
   );
 };
 
